@@ -15,15 +15,16 @@ const CameraComponent = ({ onTakePicture }) => {
   const [isCameraReady, setIsCameraReady] = useState(false); //
   const navigation = useNavigation();
 
-  useEffect(() => {
-    requestCameraPermission();
-    initializeCamera();
-  }, []);
-
   const initializeCamera = async () => {
+    await cameraRef.current?.focus({x: 0, y: 0});
     navigation.addListener('focus', handleScreenFocus);
     setIsCameraReady(true);
   };
+
+  useEffect(() => {
+    requestCameraPermission();
+    initializeCamera();
+  }, [initializeCamera]);
 
   const handleScreenFocus = () => {
     console.log('Tela CameraScreen está em foco');

@@ -182,7 +182,7 @@ function SchedulleForm({navigation}) {
             Fotografe seu dispositivo (opcional)
           </Button>
           <Button
-            icon="image"
+            icon="camera-image"
             mode="contained"
             onPress={handleOpenGallery}
             style={styles.galleryButton}>
@@ -192,7 +192,7 @@ function SchedulleForm({navigation}) {
         <Card.Actions>
           <View style={styles.addButtonContainer}>
             <Button
-              icon="check"
+              icon="check-bold"
               mode="contained"
               onPress={handleAddService}
               style={styles.addButton}>

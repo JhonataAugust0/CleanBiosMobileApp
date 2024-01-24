@@ -77,6 +77,8 @@ const stylesList = StyleSheet.create({
   card: {
     marginBottom: 16,
     elevation: 4,
+    borderRadius: 8,
+    backgroundColor: "#ece8e8"
   },
   title: {
     fontSize: 18,
