@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const dbInstance = new TaskDatabase();
 
-const CameraComponent = ({ onTakePicture }) => {
+const CameraComponent = ({onTakePicture}) => {
   const [capturedImage, setCapturedImage] = useState(null);
   const cameraRef = useRef<Camera>();
   const cameraPosition = useCameraDevice('back');
@@ -35,9 +35,13 @@ const CameraComponent = ({ onTakePicture }) => {
     }
   };
 
-  const requestCameraPermission = async (): Promise<void> => {
+  const handleCameraError = (e: any) => {
+    console.log('error', e);
+  };
+
+  const requestCameraPermission = () => {
     try {
-      const grantedCam = await PermissionsAndroid.request(
+      const grantedCam = PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
           title: 'Permissão de câmera',
@@ -46,7 +50,7 @@ const CameraComponent = ({ onTakePicture }) => {
           buttonPositive: 'OK',
         },
       );
-      const grantedStorage = await PermissionsAndroid.request(
+      const grantedStorage = PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
           title: 'Permissão de armazenamento',
@@ -55,17 +59,19 @@ const CameraComponent = ({ onTakePicture }) => {
           buttonPositive: 'OK',
         },
       );
-      const grantedReadSorage = await PermissionsAndroid.request(
+      const grantedReadSorage = PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         {
           title: 'Permissão de armazenamento',
-          message: 'Este aplicativo precisa da permissão para salvar imagens na galeria.',
+          message:
+            'Este aplicativo precisa da permissão para salvar imagens na galeria.',
           buttonPositive: 'OK',
         },
       );
       if (
         grantedCam === PermissionsAndroid.RESULTS.GRANTED &&
-        grantedStorage === PermissionsAndroid.RESULTS.GRANTED
+        grantedStorage === PermissionsAndroid.RESULTS.GRANTED &&
+        grantedReadSorage === PermissionsAndroid.RESULTS.GRANTED
       ) {
         console.log('Permissões concedidas');
       } else {
@@ -76,6 +82,10 @@ const CameraComponent = ({ onTakePicture }) => {
       console.warn(err);
     }
   };
+
+  useEffect(() => {
+    requestCameraPermission();
+  }, [requestCameraPermission]);
 
   const handleTakePicture = async (): Promise<void> => {
     await dbInstance.openDatabase();
@@ -124,12 +134,14 @@ const CameraComponent = ({ onTakePicture }) => {
       )}
       <View style={{flex: 1}}>
         <Camera
-          ref={cameraRef}
-          style={{flex: 1}}
-          device={cameraPosition}
-          isActive={true}
-          fullScreen={true}
           photo={true}
+          isActive={true}
+          ref={cameraRef}
+          device={cameraPosition}
+          fullScreen={true}
+          style={{flex: 1}}
+          video={true}
+          onError={handleCameraError}
         />
       </View>
       <Button title="Tirar Foto" onPress={handleTakePicture} />

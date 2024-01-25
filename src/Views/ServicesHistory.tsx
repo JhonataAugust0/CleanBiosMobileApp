@@ -3,7 +3,7 @@ import {Service} from '../interfaces/Service.ts';
 import {useFocusEffect} from '@react-navigation/native';
 import * as React from 'react';
 import {Card, Title, Paragraph, Text} from 'react-native-paper';
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import {FlatList, Image, StyleSheet, View} from 'react-native';
 import ServiceDatabase from '../database/database.ts';
 
 function ServicesHistory() {
