@@ -56,19 +56,4 @@ const AppNavigator = () => {
   );
 };
 
-// const AppNavigator = () => {
-//   const Tab = createBottomTabNavigator();
-//
-//   return (
-//     <NavigationContainer>
-//       <Tab.Navigator>
-//         <Tab.Screen name="Serviços" component={ServiceList} />
-//         <Tab.Screen name="Agendar serviço" component={SchedulleForm} />
-//         <Tab.Screen name="History" component={ServicesHistory} />
-//         <Tab.Screen name="CameraScreen" component={CameraScreen} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//   );
-// };
-
 export default AppNavigator;
